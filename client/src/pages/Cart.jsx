@@ -4,24 +4,25 @@ import Fotter from "..//components/Fotter";
 import styled from "styled-components";
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 
 const Conatiner = styled.div`
-  /* overflow: hidden; */
+  /* height: 100vh;
+  width: 100vw; */
+  overflow: hidden;
 `;
 const Wrapper = styled.div`
-  /* height: 100vh; */
-  width: 100vw;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  /* width: 100%;
+  height: 100%; */
 `;
 const Title = styled.h2`
   margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: ${(props) => (props.type === "sure" ? "15px" : "0px")};
-  font-weight: 200;
 `;
 const TopButton = styled.div`
   display: flex;
@@ -33,7 +34,9 @@ const Button = styled.button`
   padding: 8px;
   background-color: ${(props) => (props.type === "right" ? "black" : "white")};
   color: ${(props) => (props.type === "right" ? "white" : "black")};
-  cursor: pointer;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 const MiddleDesc = styled.div`
   display: flex;
@@ -41,93 +44,118 @@ const MiddleDesc = styled.div`
   justify-content: center;
 `;
 const Shopping = styled.span`
-  margin-left: 10px;
+  margin: 10px;
   text-decoration: underline;
 `;
+
 const ProductAdd = styled.div`
   display: flex;
-  margin: 20px;
+  /* margin: 20px;
+  height: 40%;
+  width: 100%; */
 `;
-
-const ProducBody = styled.div`
+const ProductItems = styled.div`
   flex: 3;
-  margin-right: 30px;
-`;
-const ProductSummer = styled.span`
-  flex: 1;
-  height: 50vh;
-  border: 1px solid black;
-`;
-const ProductdDesc = styled.span`
-  display: flex;
-  width: 100%;
-  margin-top: 20px;
-`;
-
-const ImageContainer = styled.div`
-  display: flex;
-  flex: 2;
-`;
-const Image = styled.img`
-  height: 75%;
-  width: 30%;
-  object-fit: cover;
-`;
-
-const ImageDesc = styled.div`
-  margin-left: 20px;
   display: flex;
   flex-direction: column;
 `;
+const ProductSummer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  border: 0.5px solid lightgray;
+  padding: 10px;
+  height: 300px;
+  margin: 5px;
+`;
+const ProductdDesc = styled.span`
+  display: flex;
+  /* height: 50%; */
+  margin-left: 10px;
+`;
+const Hr = styled.hr`
+  background-color: #eee;
+  border: none;
+  height: 1px;
+`;
+
+const ImageCOntainer = styled.span`
+  flex: 2;
+  display: flex;
+`;
+const Image = styled.img`
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+`;
+const ImageDesc = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  /* justify-content: center; */
+  margin-left: 15px;
+`;
 const NameProduct = styled.span`
-  margin-bottom: 20px;
+  margin: 10px;
 `;
-const ColorProduct = styled.span`
-  margin-bottom: 20px;
-  width: 30px;
-  height: 30px;
-  border-radius: 50px;
+
+const ColorProduct = styled.div`
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: ${(props) => props.color};
+  /* ${(props) => props.color} */
+  margin: 8px;
 `;
-const SizeProduct = styled.span``;
+const SizeProduct = styled.span`
+  margin: 10px;
+`;
 const PriceContaer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
-`;
-const IdProduct = styled.div`
-  margin-bottom: 20px;
+  justify-content: center;
 `;
 const PriceDesc = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: centers;
+  margin-bottom: 20px;
+  font-size: 20px;
 `;
-const AmountNumber = styled.div`
-  margin: 0px 10px;
+const AmountNumber = styled.span``;
+const PriceValue = styled.span`
+  font-size: 30px;
 `;
-const PriceValue = styled.div`
-  font-size: 15px;
-  margin-top: 15px;
-  font-weight: 200;
+const IdProduct = styled.span`
+  margin: 10px;
 `;
 
-const SummerItem = styled.div`
+const OrderTitle = styled.span`
+  font-size: 35px;
+  font-weight: 300;
+  margin-left: 5px;
+  margin-bottom: 10px;
+`;
+const SummerItemText = styled.span``;
+const SummerItemprice = styled.span``;
+
+const PayContainer = styled.div`
   display: flex;
   justify-content: space-between;
-`;
-const SummerItemText = styled.span`
-  margin-bottom: 15px;
-  margin-left: 20px;
-  font-size: 15px;
-`;
-const SummerItemPrice = styled.span`
-  margin-bottom: 15px;
-  margin-right: 20px;
+  margin-left: 5px;
+  margin-bottom: 25px;
+  font-weight: 500;
+  font-weight: ${(props) => props.type === "total" && "500"};
+  font-size: ${(props) => props.type === "total" && "24px"};
 `;
 
 function Cart() {
+  const cart = useSelector((state) => state.cart);
+  console.log(cart.products);
+  // const [color,setColor] = useState("")
   return (
     <Conatiner>
       <Navabar />
@@ -143,88 +171,55 @@ function Cart() {
           <Button type="right">CheckOut Now</Button>
         </TopButton>
         <ProductAdd>
-          <ProducBody>
-            <ProductdDesc>
-              <ImageContainer>
-                <Image src="https://flyingcart.pk/cdn/shop/products/1_227b79f9-ee6b-4b72-bab4-7657a4b9461a.jpg?v=1678535186" />
-                <ImageDesc>
-                  <NameProduct>
-                    <b>product</b> BEBILO SHOES
-                  </NameProduct>
-                  <IdProduct>
-                    <b>Id</b> 12345432
-                  </IdProduct>
-                  <ColorProduct
-                    style={{ backgroundColor: "black" }}
-                  ></ColorProduct>
-                  <SizeProduct>
-                    <b>size</b> L
-                  </SizeProduct>
-                </ImageDesc>
-              </ImageContainer>
-              <PriceContaer>
-                <PriceDesc>
-                  <Add style={{ cursor: "pointer" }} />
-                  <AmountNumber>3</AmountNumber>
-                  <Remove style={{ cursor: "pointer" }} />
-                </PriceDesc>
-                <PriceValue style={{ fontWeight: "300" }}>$ 40</PriceValue>
-              </PriceContaer>
-            </ProductdDesc>
-            <hr />
-            <ProductdDesc>
-              <ImageContainer>
-                <Image src="https://flyingcart.pk/cdn/shop/products/1_227b79f9-ee6b-4b72-bab4-7657a4b9461a.jpg?v=1678535186" />
-                <ImageDesc>
-                  <NameProduct>
-                    <b>product</b> BEBILO SHOES
-                  </NameProduct>
-                  <IdProduct>
-                    <b>Id</b> 12345432
-                  </IdProduct>
-                  <ColorProduct
-                    style={{ backgroundColor: "black" }}
-                  ></ColorProduct>
-                  <SizeProduct>
-                    <b>size</b> L
-                  </SizeProduct>
-                </ImageDesc>
-              </ImageContainer>
-              <PriceContaer>
-                <PriceDesc>
-                  <Add style={{ cursor: "pointer" }} />
-                  <AmountNumber>3</AmountNumber>
-                  <Remove style={{ cursor: "pointer" }} />
-                </PriceDesc>
-                <PriceValue>$ 40</PriceValue>
-              </PriceContaer>
-            </ProductdDesc>
-          </ProducBody>
+          <ProductItems>
+            {cart.products.map((item) => (
+              <ProductdDesc key={item._id}>
+                <ImageCOntainer>
+                  <Image src={item.img} />
+                  <ImageDesc>
+                    <NameProduct>
+                      <b>Product</b> {item.Title}
+                    </NameProduct>
+                    <IdProduct>
+                      <b>Id</b> {item._id}
+                    </IdProduct>
+                    <ColorProduct color={item.color}></ColorProduct>
+                    <SizeProduct>
+                      <b>size</b> {item.size}
+                    </SizeProduct>
+                  </ImageDesc>
+                </ImageCOntainer>
+                <PriceContaer>
+                  <PriceDesc>
+                    <Add />
+                    <AmountNumber>{item.quantity}</AmountNumber>
+                    <Remove />
+                  </PriceDesc>
+                  <PriceValue>$ {item.price * item.quantity}</PriceValue>
+                </PriceContaer>
+              </ProductdDesc>
+            ))}
+            <Hr />
+          </ProductItems>
           <ProductSummer>
-            <Title type="sure">OREDER SUMMER</Title>
-            <SummerItem>
+            <OrderTitle>ORDER SUMMARY</OrderTitle>
+            <PayContainer>
               <SummerItemText>Subtotal</SummerItemText>
-              <SummerItemPrice>$ 78</SummerItemPrice>
-            </SummerItem>
-            <SummerItem>
+              <SummerItemprice>$ {cart.total}</SummerItemprice>
+            </PayContainer>
+            <PayContainer>
               <SummerItemText>Estimated Shipping</SummerItemText>
-              <SummerItemPrice>$ 5.8</SummerItemPrice>
-            </SummerItem>
-            <SummerItem>
-              <SummerItemText>Shipping Discount </SummerItemText>
-              <SummerItemPrice>$ -7.8</SummerItemPrice>
-            </SummerItem>
-            <SummerItem>
-              <SummerItemText style={{ fontSize: "20px" }}>
-                <b>Total</b>
-              </SummerItemText>
-              <SummerItemPrice style={{ fontSize: "20px" }}>
-                <b>$ 80</b>
-              </SummerItemPrice>
-            </SummerItem>
-            <Button style={{ width: "90%" }} type="right">
-              CheckOut Now
-            </Button>
+              <SummerItemprice>$ 9.80</SummerItemprice>
+            </PayContainer>
+            <PayContainer>
+              <SummerItemText>Shopping Discount</SummerItemText>
+              <SummerItemprice>$ -5.77</SummerItemprice>
+            </PayContainer>
+            <PayContainer type="total">
+              <SummerItemText>Total</SummerItemText>
+              <SummerItemprice>{cart.total}</SummerItemprice>
+            </PayContainer>
+            <Button type="right">CHECKOUT NOW </Button>
           </ProductSummer>
         </ProductAdd>
       </Wrapper>

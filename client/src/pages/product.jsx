@@ -4,6 +4,11 @@ import Feed from "../components/Feed";
 import Fotter from "../components/Fotter";
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { addProduct } from "../reducer/cartReducer";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   height: 100vh;
@@ -53,17 +58,20 @@ const Fliter = styled.div`
 const FliterTitle = styled.div`
   font-size: 20px;
   font-weight: 200;
+  margin-right: 10px;
 `;
-const FlterColor = styled.div`
+const FilterColor = styled.div`
   width: 30px;
   height: 30px;
   border-radius: 20px;
   background-color: ${(props) => props.color};
   margin-left: 5px;
+  cursor: pointer;
+  transition: all 0.5s ease;
 `;
 
 const FliterSize = styled.select`
-  padding: 10px;
+  padding: 7px;
 `;
 // const Select = styled.select`
 // `;
@@ -87,7 +95,7 @@ const Amount = styled.span`
   padding: 5px;
 `;
 const Button = styled.button`
-  margin-left: 110px;
+  margin-left: 112px;
   padding: 10px;
   font-weight: 600;
   font-size: 15px;
@@ -101,46 +109,82 @@ const Button = styled.button`
 `;
 
 function product() {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:5000/api/product/find/" + id
+        );
+        setProduct(res.data);
+      } catch (error) {}
+    };
+    getProduct();
+  }, [id]);
+
+  const handelQuantity = (type) => {
+    if (type === "remove") {
+      quantity > 1 && setQuantity(quantity - 1);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  };
+
+  const handleClick = () => {
+    dispatch(addProduct({ ...product, quantity, color, size }));
+  };
+
   return (
     <Container>
       <Navabar />
       <Feed />
       <Wrapper>
         <ImageContainer>
-          <Image src="https://blog.bonfire.com/wp-content/uploads/2023/02/colorcombinations6-1.webp" />
+          <Image src={product.img} />
         </ImageContainer>
         <InfoContainer>
-          <Title>Denim Jumpster</Title>
+          <Title>{product.title}</Title>
           <Desc>
             There are many variations of passages of Lorem Ipsum available, but
             the majority have suffered alteration in some form, by injected
             humour, or randomised words which don’t look even slightly
             believable.
           </Desc>
-          <Price>$ 20</Price>
+          <Price>$ {product.price}</Price>
           <FliterConatiner>
             <Fliter>
               <FliterTitle>color</FliterTitle>
-              <FlterColor color="black" />
-              <FlterColor color="blue" />
-              <FlterColor color="gray" />
+              {product.color?.map((c) => (
+                <FilterColor color={c} key={c} onClick={() => setColor(c)} />
+              ))}
             </Fliter>
             <Fliter>
               <FliterTitle>size</FliterTitle>
-              <FliterSize>
-                <Option value="">ALL</Option>
-                <Option value="">L</Option>
-                <Option value="">M</Option>
-                <Option value="">XL</Option>
-                <Option value="">XXL</Option>
+              <FliterSize onChange={(e) => setSize(e.target.value)}>
+                {product.size?.map((s) => (
+                  <Option key={s}>{s}</Option>
+                ))}
               </FliterSize>
             </Fliter>
           </FliterConatiner>
           <CartConatier>
-            <Remove style={{ cursor: "pointer" }} />
-            <Amount>1</Amount>
-            <Add style={{ cursor: "pointer" }} />
-            <Button>Add to Cart</Button>
+            <Remove
+              onClick={() => handelQuantity("remove")}
+              style={{ cursor: "pointer" }}
+            />
+            <Amount>{quantity}</Amount>
+            <Add
+              onClick={() => handelQuantity("add")}
+              style={{ cursor: "pointer" }}
+            />
+            <Button onClick={handleClick}>Add to Cart</Button>
           </CartConatier>
         </InfoContainer>
       </Wrapper>

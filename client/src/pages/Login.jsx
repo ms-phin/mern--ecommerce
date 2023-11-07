@@ -1,4 +1,7 @@
+import { useState } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../reducer/apiCall";
 
 const Container = styled.div`
   height: 100vh;
@@ -36,33 +39,65 @@ const Rules = styled.span`
   margin-left: 40px;
   font-size: 13px;
 `;
+const From = styled.form``;
 const Button = styled.button`
   font-size: 15px;
   font-weight: 500;
   color: #000;
   background-color: teal;
-  padding: 15px;
+  padding: 12px;
   width: 30%;
   margin-left: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 7px;
   margin-top: 10px;
+  &:disabled {
+    color: green;
+    cursor: not-allowed;
+  }
 
   &:hover {
     background-color: black;
     color: white;
   }
 `;
+const Error = styled.span`
+  color: red;
+  margin-left: 40px;
+`;
 
 function Login() {
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const dispatch = useDispatch();
+  const { isFetching, isError } = useSelector((state) => state.user);
+
+  const handelClick = (e) => {
+    e.preventDefault();
+    login(dispatch, { username, password });
+  };
+
   return (
     <Container>
       <FormContainer>
         <Title>SIGN IN</Title>
-        <InputContainer>
-          <Input placeholder="username" />
-          <Input placeholder="password" />
-        </InputContainer>
-        <Button>LOGIN</Button>
+        <From>
+          <InputContainer>
+            <Input
+              placeholder="username"
+              type="text"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Input
+              placeholder="password"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </InputContainer>
+          <Button onClick={handelClick} disabled={isFetching}>
+            LOGIN
+          </Button>
+        </From>
+        {isError && <Error>Something Went Wrong</Error>}
         <Rules>DO YOU NOT REMEBER THE PASSWORD ? CREAYE NEW ACCOUNT</Rules>
       </FormContainer>
     </Container>

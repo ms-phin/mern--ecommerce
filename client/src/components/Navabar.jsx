@@ -3,7 +3,8 @@ import styled from "styled-components";
 import Badge from "@mui/material/Badge";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import ShoppingCartOutlined from "@mui/icons-material/ShoppingCartOutlined";
-
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Container = styled.div`
   width: 100%;
   height: 50px;
@@ -24,6 +25,7 @@ const Left = styled.div`
 const Language = styled.h5`
   font-size: 15px;
   cursor: pointer;
+  margin-right: 10px;
 `;
 
 const SearchContainer = styled.div`
@@ -35,6 +37,7 @@ const SearchContainer = styled.div`
 `;
 const Input = styled.input`
   border: none;
+  outline: none;
 `;
 
 const Center = styled.div`
@@ -42,7 +45,8 @@ const Center = styled.div`
 `;
 const Header = styled.h1`
   display: flex;
-
+  text-decoration: none;
+  color: black;
   align-items: center;
   justify-content: center;
 `;
@@ -57,13 +61,23 @@ const Right = styled.div`
 `;
 const Registrer = styled.h3`
   margin-right: 25px;
+  color: black;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
 const Login = styled.h3`
   margin-right: 25px;
+  color: black;
 `;
-const Icone = styled.h3``;
+const Icone = styled.h3`
+  color: black;
+`;
 
 const Navabar = () => {
+  const quantity = useSelector((state) => state.cart.quantity);
+  console.log(quantity);
   return (
     <div>
       <Container>
@@ -71,21 +85,29 @@ const Navabar = () => {
           <Left>
             <Language>EN</Language>
             <SearchContainer>
-              <Input></Input>
+              <Input placeholder="Search..." />
               <SearchOutlinedIcon />
             </SearchContainer>
           </Left>
           <Center>
-            <Header>BEBILO</Header>
+            <StyledLink to="/">
+              <Header>BEBILO</Header>
+            </StyledLink>
           </Center>
           <Right>
-            <Registrer>Register</Registrer>
-            <Login>Login</Login>
-            <Icone>
-              <Badge badgeContent={4} color="primary">
-                <ShoppingCartOutlined />
-              </Badge>
-            </Icone>
+            <StyledLink to="/sign-up">
+              <Registrer>Register</Registrer>
+            </StyledLink>
+            <StyledLink to="/sign-in">
+              <Login>Login</Login>
+            </StyledLink>
+            <StyledLink to="/cart">
+              <Icone>
+                <Badge badgeContent={quantity} color="primary">
+                  <ShoppingCartOutlined />
+                </Badge>
+              </Icone>
+            </StyledLink>
           </Right>
         </Wrapper>
       </Container>

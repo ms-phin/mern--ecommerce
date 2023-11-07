@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Products from "../components/Products";
 import Newsletter from "../components/Newsletter";
 import Fotter from "../components/Fotter";
+import { useLocation } from "react-router-dom";
 
 const Container = styled.div``;
 const FLiterContainer = styled.div`
@@ -37,20 +38,20 @@ const FliterSize = styled.div`
 `;
 
 function ProductList() {
-  const [color, setColor] = useState("");
-  const [size, setSize] = useState("");
+  const location = useLocation();
+  const cat = location.pathname.split("/")[2];
+  const [filters, setFilters] = useState({});
+  const [sort, setSort] = useState("Newest");
 
-  const handleChange = (event) => {
-    event.preventDefault();
-    setColor(event.target.value);
+  const handleFilters = (event) => {
+    // event.preventDefault();
+    const value = event.target.value;
+    setFilters({
+      ...filters,
+      [event.target.name]: value,
+    });
   };
-  console.log(color);
-
-  const handleSizeChange = (event) => {
-    event.preventDefault();
-    setSize(event.target.value);
-  };
-  console.log(size);
+  // console.log(fliters);
 
   return (
     <Container>
@@ -66,10 +67,10 @@ function ProductList() {
               Color:
               <Select
                 style={{ padding: "7px" }}
-                value={color}
-                onChange={handleChange}
+                name="color"
+                onChange={handleFilters}
               >
-                <Option value="">All</Option>
+                <Option disabled>All</Option>
                 <Option value="red">Red</Option>
                 <Option value="blue">Blue</Option>
                 <Option value="green">Green</Option>
@@ -80,8 +81,12 @@ function ProductList() {
           <FliterSize>
             <label>
               Size:
-              <Select style={{ padding: "7px" }} onChange={handleSizeChange}>
-                <Option value="">All</Option>
+              <Select
+                name="size"
+                style={{ padding: "7px" }}
+                onChange={handleFilters}
+              >
+                <Option disabled>All</Option>
                 <Option value="small">Small</Option>
                 <Option value="medium">Medium</Option>
                 <Option value="large">Large</Option>
@@ -91,14 +96,14 @@ function ProductList() {
         </Fliter>
         <Fliter>
           <FliterText>Sort Products</FliterText>
-          <Select>
-            <Option selected>Newest</Option>
-            <Option>Price (asc)</Option>
-            <Option> Price (desc)</Option>
+          <Select onChange={(e) => setSort(e.target.value)}>
+            <Option value="newest">Newest</Option>
+            <Option value="asc">Price (asc)</Option>
+            <Option value="desc"> Price (desc)</Option>
           </Select>
         </Fliter>
       </FLiterContainer>
-      <Products />
+      <Products cat={cat} filters={filters} sort={sort} />
       <Newsletter />
       <Fotter />
     </Container>
