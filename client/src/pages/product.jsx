@@ -10,26 +10,38 @@ import axios from "axios";
 import { addProduct } from "../reducer/cartReducer";
 import { useDispatch } from "react-redux";
 
+import { mobile } from "../responsive";
+
 const Container = styled.div`
   height: 100vh;
   width: 100vw;
   overflow: hidden;
   /* display: flex; */
+  ${mobile({ height: "120vh" })}
 `;
 const Wrapper = styled.div`
   height: 100%;
   width: 90%;
   display: flex;
   margin-top: 30px;
+  ${mobile({ display: "flex", flexDirection: "column" })}
 `;
 const ImageContainer = styled.div`
   flex: 1;
+  ${mobile({
+    display: "flex",
+    height: "30%",
+    marginLeft: "80px",
+    maxHeight: "200px",
+  })}
 `;
 const InfoContainer = styled.div`
   flex: 1;
+  ${mobile({ height: "50%", marginLeft: "30px" })}
 `;
 const Image = styled.img`
   width: 90%;
+  ${mobile({ height: "100%", objectFit: "contain" })}
 `;
 const Title = styled.h2`
   /* margin-left: 20px; */
@@ -49,6 +61,11 @@ const FliterConatiner = styled.div`
   display: flex;
   justify-content: space-between;
   width: 50%;
+  ${mobile({
+    ":nth-child(2)": {
+      marginLeft: "20px",
+    },
+  })}
 `;
 const Fliter = styled.div`
   display: flex;
@@ -138,6 +155,13 @@ function product() {
   };
 
   const handleClick = () => {
+    // console.log("Dispatching addProduct action with payload:", {
+    //   ...product,
+    //   quantity,
+    //   color,
+    //   size,
+    // });
+
     dispatch(addProduct({ ...product, quantity, color, size }));
   };
 

@@ -3,6 +3,7 @@ import ProductItems from "./ProductItems";
 // import { popularProducts } from "../../src/data";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   display: flex;
@@ -12,6 +13,7 @@ const Container = styled.div`
   background-color: white;
   height: 100vh;
   width: 100%;
+  ${mobile({ height: "387vh" })}
 `;
 
 function Products({ cat, filters, sort }) {

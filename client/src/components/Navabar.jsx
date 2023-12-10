@@ -4,10 +4,15 @@ import Badge from "@mui/material/Badge";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import ShoppingCartOutlined from "@mui/icons-material/ShoppingCartOutlined";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutClean } from "../reducer/userReducer";
+import { resetCart } from "../reducer/cartReducer";
+import { mobile } from "../responsive";
 const Container = styled.div`
   width: 100%;
   height: 50px;
+  overflow: hidden;
+  ${mobile({ width: "100%" })}
 `;
 const Wrapper = styled.div`
   padding: 10px 20px;
@@ -26,6 +31,7 @@ const Language = styled.h5`
   font-size: 15px;
   cursor: pointer;
   margin-right: 10px;
+  ${mobile({ display: "none" })}
 `;
 
 const SearchContainer = styled.div`
@@ -34,10 +40,12 @@ const SearchContainer = styled.div`
   justify-content: center;
   border: #837575 1px solid;
   border-radius: 5px;
+  ${mobile({ marginLeft: "-12px" })}
 `;
 const Input = styled.input`
   border: none;
   outline: none;
+  ${mobile({ width: "100px" })}
 `;
 
 const Center = styled.div`
@@ -49,6 +57,7 @@ const Header = styled.h1`
   color: black;
   align-items: center;
   justify-content: center;
+  ${mobile({ fontSize: "23px" })}
 `;
 
 const Right = styled.div`
@@ -62,6 +71,7 @@ const Right = styled.div`
 const Registrer = styled.h3`
   margin-right: 25px;
   color: black;
+  ${mobile({ fontSize: "15px", marginRight: "12px" })}
 `;
 
 const StyledLink = styled(Link)`
@@ -70,14 +80,31 @@ const StyledLink = styled(Link)`
 const Login = styled.h3`
   margin-right: 25px;
   color: black;
+  cursor: pointer;
+  ${mobile({ fontSize: "15px" })}
+`;
+const Logout = styled.h3`
+  margin-right: 25px;
+  color: black;
+  cursor: pointer;
+  ${mobile({ fontSize: "15px" })};
 `;
 const Icone = styled.h3`
   color: black;
+
+  ${mobile({ fontSize: "15px", fontWeight: "12px" })}
 `;
 
 const Navabar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
-  console.log(quantity);
+  const user = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
+  // console.log(user);
+  // console.log(quantity);
+  const handleClear = () => {
+    dispatch(logoutClean());
+    dispatch(resetCart());
+  };
   return (
     <div>
       <Container>
@@ -98,9 +125,17 @@ const Navabar = () => {
             <StyledLink to="/sign-up">
               <Registrer>Register</Registrer>
             </StyledLink>
-            <StyledLink to="/sign-in">
-              <Login>Login</Login>
-            </StyledLink>
+
+            {user ? (
+              <StyledLink to="/">
+                <Logout onClick={handleClear}>Logout</Logout>
+              </StyledLink>
+            ) : (
+              <StyledLink to="/sign-in">
+                <Login>Login</Login>
+              </StyledLink>
+            )}
+
             <StyledLink to="/cart">
               <Icone>
                 <Badge badgeContent={quantity} color="primary">

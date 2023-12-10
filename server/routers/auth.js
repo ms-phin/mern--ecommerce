@@ -4,6 +4,7 @@ const CryptoJS = require("crypto-js");
 const Jwt = require("jsonwebtoken");
 
 router.post("/register", async (req, res) => {
+  console.log(req.body);
   const newuser = new User({
     username: req.body.username,
     email: req.body.email,
@@ -12,6 +13,7 @@ router.post("/register", async (req, res) => {
       process.env.PASS_SEC
     ).toString(),
   });
+  console.log(newuser);
   try {
     const user = await newuser.save();
     res.status(200).json(user);

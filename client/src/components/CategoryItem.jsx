@@ -1,17 +1,21 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   flex: 1;
   margin: 3px;
-  height: 70vh;
+  height: 100vh;
+  /* width: 100vw; */
   position: relative;
+  ${mobile({ height: "30vh", width: "100%" })}
 `;
 const Image = styled.img`
   margin: 30px;
   object-fit: cover;
   height: 100%;
   width: 100%;
+  ${mobile({ height: "100%", margin: "0px", objectFit: "cover" })}
 `;
 const Info = styled.div`
   top: 0px;
@@ -24,6 +28,7 @@ const Info = styled.div`
   margin: auto;
   cursor: pointer;
   z-index: 2;
+  ${mobile({ width: "100%" })}
 `;
 const Title = styled.h2`
   font-size: 25px;
@@ -33,12 +38,15 @@ const Title = styled.h2`
   margin-left: 136px;
   margin-bottom: 20px;
   color: white;
+  width: 100%;
+  ${mobile({ marginLeft: "170px", width: "100%" })}
 `;
 const Button = styled.button`
   padding: 10px;
   font-size: 15px;
   font-weight: 400;
   margin-left: 120px;
+  ${mobile({ marginLeft: "0px" })}
 `;
 
 function CategoryItem({ item }) {

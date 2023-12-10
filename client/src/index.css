@@ -67,3 +67,10 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+::-webkit-scrollbar {
+  display: none;
+}

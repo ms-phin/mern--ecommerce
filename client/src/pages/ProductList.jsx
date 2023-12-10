@@ -6,6 +6,7 @@ import Products from "../components/Products";
 import Newsletter from "../components/Newsletter";
 import Fotter from "../components/Fotter";
 import { useLocation } from "react-router-dom";
+import { mobile } from "../responsive";
 
 const Container = styled.div``;
 const FLiterContainer = styled.div`
@@ -19,6 +20,7 @@ const Fliter = styled.div`
   margin: 20px;
   display: flex;
   align-items: center;
+  ${mobile({ display: "flex", flexDirection: "column" })}
 `;
 const FliterProducts = styled.h3`
   margin: 5px;

@@ -3,6 +3,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { Link } from "react-router-dom";
+import { mobile } from "../responsive";
 
 const IconeContainer = styled.div`
   opacity: 0;
@@ -18,6 +19,7 @@ const IconeContainer = styled.div`
   margin: auto;
   cursor: pointer;
   z-index: 3;
+  ${mobile({ height: "100%", width: "100%" })}
 `;
 
 const Container = styled.div`
@@ -32,6 +34,7 @@ const Container = styled.div`
 `;
 const Image = styled.img`
   height: 100%;
+  ${mobile({ height: "100%" })}
 `;
 
 const CartIcon = styled.div`

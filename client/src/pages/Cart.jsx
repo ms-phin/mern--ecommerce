@@ -5,7 +5,10 @@ import styled from "styled-components";
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addProductQuantity } from "../reducer/cartReducer";
+import Pay from "../Pay";
+import { mobile } from "../responsive";
 
 const Conatiner = styled.div`
   /* height: 100vh;
@@ -50,9 +53,7 @@ const Shopping = styled.span`
 
 const ProductAdd = styled.div`
   display: flex;
-  /* margin: 20px;
-  height: 40%;
-  width: 100%; */
+  ${mobile({ display: "flex", flexDirection: "column" })}
 `;
 const ProductItems = styled.div`
   flex: 3;
@@ -71,8 +72,8 @@ const ProductSummer = styled.div`
 `;
 const ProductdDesc = styled.span`
   display: flex;
-  /* height: 50%; */
   margin-left: 10px;
+  ${mobile({ display: "flex", flexDirection: "column" })}
 `;
 const Hr = styled.hr`
   background-color: #eee;
@@ -117,6 +118,7 @@ const PriceContaer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  ${mobile({ marginBottom: "30px", backgroundColor: "gray" })}
 `;
 const PriceDesc = styled.div`
   display: flex;
@@ -125,7 +127,9 @@ const PriceDesc = styled.div`
   margin-bottom: 20px;
   font-size: 20px;
 `;
-const AmountNumber = styled.span``;
+const AmountNumber = styled.span`
+  margin: 5px;
+`;
 const PriceValue = styled.span`
   font-size: 30px;
 `;
@@ -154,8 +158,21 @@ const PayContainer = styled.div`
 
 function Cart() {
   const cart = useSelector((state) => state.cart);
-  console.log(cart.products);
-  // const [color,setColor] = useState("")
+  const user = useSelector((state) => state.user);
+  // console.log(cart);
+  console.log(user.currentUser);
+  const amount = cart.total;
+  const username = user.currentUser?.username;
+  console.log(username);
+  const email = user.currentUser?.email;
+  const tx_ref = `${username}-tx-13122023`;
+  const public_key = "CHAPUBK_TEST-QWrLBBQxr4sTSewtSnaf5XNNzP23Ya61";
+  const dispatch = useDispatch();
+
+  const handleQuantity = (productId, quantity) => {
+    dispatch(addProductQuantity({ productId, quantity }));
+  };
+
   return (
     <Conatiner>
       <Navabar />
@@ -172,33 +189,40 @@ function Cart() {
         </TopButton>
         <ProductAdd>
           <ProductItems>
-            {cart.products.map((item) => (
-              <ProductdDesc key={item._id}>
-                <ImageCOntainer>
-                  <Image src={item.img} />
-                  <ImageDesc>
-                    <NameProduct>
-                      <b>Product</b> {item.Title}
-                    </NameProduct>
-                    <IdProduct>
-                      <b>Id</b> {item._id}
-                    </IdProduct>
-                    <ColorProduct color={item.color}></ColorProduct>
-                    <SizeProduct>
-                      <b>size</b> {item.size}
-                    </SizeProduct>
-                  </ImageDesc>
-                </ImageCOntainer>
-                <PriceContaer>
-                  <PriceDesc>
-                    <Add />
-                    <AmountNumber>{item.quantity}</AmountNumber>
-                    <Remove />
-                  </PriceDesc>
-                  <PriceValue>$ {item.price * item.quantity}</PriceValue>
-                </PriceContaer>
-              </ProductdDesc>
-            ))}
+            {cart.products &&
+              cart.products.map((item) => (
+                <ProductdDesc key={item._id}>
+                  <ImageCOntainer>
+                    <Image src={item.img} />
+                    <ImageDesc>
+                      <NameProduct>
+                        <b>Product</b> {item.Title}
+                      </NameProduct>
+                      <IdProduct>
+                        <b>Id</b> {item._id}
+                      </IdProduct>
+                      <ColorProduct color={item.color}></ColorProduct>
+                      <SizeProduct>
+                        <b>size</b> {item.size}
+                      </SizeProduct>
+                    </ImageDesc>
+                  </ImageCOntainer>
+                  <PriceContaer>
+                    <PriceDesc>
+                      <Add
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleQuantity(item._id, 1)}
+                      />
+                      <AmountNumber>{item.quantity}</AmountNumber>
+                      <Remove
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleQuantity(item._id, -1)}
+                      />
+                    </PriceDesc>
+                    <PriceValue>$ {item.price * item.quantity}</PriceValue>
+                  </PriceContaer>
+                </ProductdDesc>
+              ))}
             <Hr />
           </ProductItems>
           <ProductSummer>
@@ -219,7 +243,16 @@ function Cart() {
               <SummerItemText>Total</SummerItemText>
               <SummerItemprice>{cart.total}</SummerItemprice>
             </PayContainer>
-            <Button type="right">CHECKOUT NOW </Button>
+            <Button type="right">
+              {" "}
+              <Pay
+                username={username}
+                email={email}
+                amount={amount}
+                tx_ref={tx_ref}
+                public_key={public_key}
+              />
+            </Button>
           </ProductSummer>
         </ProductAdd>
       </Wrapper>

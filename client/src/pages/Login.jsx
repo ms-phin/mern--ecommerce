@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../reducer/apiCall";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   height: 100vh;
@@ -15,6 +16,7 @@ const Container = styled.div`
     ),
     url(https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940),
     center;
+  ${mobile({})}
 `;
 
 const FormContainer = styled.form`
@@ -23,6 +25,14 @@ const FormContainer = styled.form`
   width: 36%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  ${mobile({
+    width: "90%",
+    height: "60%",
+    marginBottom: "30px",
+  })}
 `;
 const Title = styled.h3`
   margin-left: 40px;

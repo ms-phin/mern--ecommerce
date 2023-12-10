@@ -14,8 +14,14 @@ import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 
 const App = () => {
-  const user = useSelector((state) => state.user.currentUser); // Move useSelector inside the component
+  const user = useSelector((state) => state.user.currentUser);
   console.log(user);
+  const params = new URLSearchParams(location.search);
+  console.log(params);
+
+  const tx_ref = params.get("tx_ref");
+  console.log(tx_ref);
+
   const router = createBrowserRouter([
     {
       path: "/",

@@ -7,27 +7,52 @@ import Pinterest from "@mui/icons-material/Pinterest";
 import Room from "@mui/icons-material/Room";
 import Phone from "@mui/icons-material/Phone";
 import MailOutLlne from "@mui/icons-material/MailOutline";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   display: flex;
   background-color: aliceblue;
+  ${mobile({
+    display: "flex",
+    flexDirection: "column",
+    height: "90vh",
+  })}
 `;
 const Left = styled.div`
   flex: 1;
   padding: 20px;
+  ${mobile({
+    display: "flex",
+    flexDirection: "column",
+    height: "33vh",
+  })}
 `;
 const Logo = styled.h1`
   margin-bottom: 20px;
+  ${mobile({
+    marginBottom: "5px",
+  })}
 `;
 const Desc = styled.p`
   margin-bottom: 20px;
+  ${mobile({
+    marginBottom: "5px",
+  })}
 `;
 const SocialIcon = styled.div`
   margin: 10px;
+  ${mobile({
+    margin: "0px",
+  })}
 `;
 const Center = styled.div`
   flex: 1;
   margin-bottom: 10px;
+  ${mobile({
+    height: "33vh",
+    marginTop: "-260px",
+    marginLeft: "12px",
+  })}
 `;
 const Title = styled.h3`
   margin-bottom: 30px;
@@ -46,6 +71,12 @@ const ListItem = styled.li`
 `;
 const Right = styled.div`
   flex: 1;
+  ${mobile({
+    height: "33vh",
+    marginTop: "-200px",
+    marginLeft: "12px",
+    marginBottom: "10px",
+  })}
 `;
 const ContactItem = styled.h4`
   margin-bottom: 10px;
@@ -88,7 +119,7 @@ function Fotter() {
         <Title>Contact</Title>
         <ContactItem>
           <Room style={{ marginRight: "10px" }} />
-          633 Dixie Path , South Tobinchester 99876
+          Hawassa , the southeastern of the city
         </ContactItem>
         <ContactItem>
           <Phone style={{ marginRight: "10px" }} />

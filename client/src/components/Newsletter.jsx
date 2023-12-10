@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   display: flex;
@@ -12,6 +13,7 @@ const Container = styled.div`
   flex-direction: column;
   background-color: #f1e3e5;
   margin-top: 30px;
+  ${mobile({ height: "50vh", marginTop: "190px" })}
 `;
 const Letter = styled.h1`
   margin-bottom: 20px;
