@@ -7,7 +7,6 @@ const authRouter = require("./routers/auth");
 const productRouter = require("./routers/Product");
 const cartRouter = require("./routers/Cart");
 const orderRouter = require("./routers/Order");
-const stripeRouter = require("./routers/Stripe");
 const cors = require("cors");
 
 app.use(express.json());
@@ -28,7 +27,6 @@ app.use("/api/auth", authRouter);
 app.use("/api/product", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
-app.use("/api/checkout", stripeRouter);
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("Backend Server is running");
