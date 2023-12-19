@@ -25,8 +25,8 @@ function Products({ cat, filters, sort }) {
       try {
         const res = await axios.get(
           cat
-            ? `http://localhost:5000/api/product/find?category=${cat}`
-            : "http://localhost:5000/api/product/find"
+            ? `https://ecommerce-app-f1ic.onrender.com/api/product/find?category=${cat}`
+            : "https://ecommerce-app-f1ic.onrender.com/api/product/find"
         );
         setProducts(res.data);
       } catch (error) {}

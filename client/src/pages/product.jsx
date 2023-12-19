@@ -146,7 +146,7 @@ function product() {
     const getProduct = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/api/product/find/" + id
+          "https://ecommerce-app-f1ic.onrender.com/api/product/find/" + id
         );
         setProduct(res.data);
       } catch (error) {}
