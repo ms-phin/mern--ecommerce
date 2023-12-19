@@ -25,7 +25,7 @@ const IconeContainer = styled.div`
 const Container = styled.div`
   background-color: white;
   margin: 10px;
-  height: 50vh;
+  height: 55vh;
   position: relative;
   border-radius: 20px;
   &:hover ${IconeContainer} {
@@ -33,7 +33,10 @@ const Container = styled.div`
   }
 `;
 const Image = styled.img`
-  height: 100%;
+  height: 350px;
+  margin-left: 20px;
+  width: 300px;
+  object-fit: contain;
   ${mobile({ height: "100%" })}
 `;
 

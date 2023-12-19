@@ -4,30 +4,34 @@ import Feed from "../components/Feed";
 import Fotter from "../components/Fotter";
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { addProduct } from "../reducer/cartReducer";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-
 import { mobile } from "../responsive";
+// import { useHistory } from "react-router-dom";
 
 const Container = styled.div`
-  height: 100vh;
+  height: 128vh;
   width: 100vw;
   overflow: hidden;
   /* display: flex; */
   ${mobile({ height: "120vh" })}
 `;
 const Wrapper = styled.div`
-  height: 100%;
-  width: 90%;
+  height: 60%;
+  width: 70%;
   display: flex;
   margin-top: 30px;
+  margin-left: 40px;
   ${mobile({ display: "flex", flexDirection: "column" })}
 `;
 const ImageContainer = styled.div`
   flex: 1;
+  height: "500px";
+  width: "500px";
   ${mobile({
     display: "flex",
     height: "30%",
@@ -40,7 +44,8 @@ const InfoContainer = styled.div`
   ${mobile({ height: "50%", marginLeft: "30px" })}
 `;
 const Image = styled.img`
-  width: 90%;
+  width: "80%";
+  height: "80%";
   ${mobile({ height: "100%", objectFit: "contain" })}
 `;
 const Title = styled.h2`
@@ -126,6 +131,8 @@ const Button = styled.button`
 `;
 
 function product() {
+  const user = useSelector((state) => state.user);
+  console.log(user.currentUser);
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
@@ -133,6 +140,7 @@ function product() {
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getProduct = async () => {
@@ -154,24 +162,29 @@ function product() {
     }
   };
 
+  // const handleClick = () => {
+  //   dispatch(addProduct({ ...product, quantity, color, size }));
+  // };
   const handleClick = () => {
-    // console.log("Dispatching addProduct action with payload:", {
-    //   ...product,
-    //   quantity,
-    //   color,
-    //   size,
-    // });
-
-    dispatch(addProduct({ ...product, quantity, color, size }));
+    if (user.currentUser) {
+      // If there is a user, dispatch the addProduct action
+      dispatch(addProduct({ ...product, quantity, color, size }));
+    } else {
+      // If there is no user, handle the logic accordingly (e.g., show a message)
+      navigate("/sign-in");
+    }
   };
-
   return (
     <Container>
       <Navabar />
       <Feed />
       <Wrapper>
         <ImageContainer>
-          <Image src={product.img} />
+          {/* <Image src={product.img} /> */}
+          <Image
+            src={product.img}
+            style={{ height: "400px", width: "500px", objectFit: "contain" }}
+          />
         </ImageContainer>
         <InfoContainer>
           <Title>{product.title}</Title>
@@ -190,7 +203,7 @@ function product() {
               ))}
             </Fliter>
             <Fliter>
-              <FliterTitle>size</FliterTitle>
+              <FliterTitle style={{ marginLeft: "60px" }}>size</FliterTitle>
               <FliterSize onChange={(e) => setSize(e.target.value)}>
                 {product.size?.map((s) => (
                   <Option key={s}>{s}</Option>

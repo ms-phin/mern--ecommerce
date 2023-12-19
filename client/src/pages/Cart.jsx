@@ -88,6 +88,7 @@ const ImageCOntainer = styled.span`
 const Image = styled.img`
   height: 200px;
   width: 200px;
+  margin: 10px;
   object-fit: cover;
 `;
 const ImageDesc = styled.div`
@@ -158,19 +159,20 @@ const PayContainer = styled.div`
 
 function Cart() {
   const cart = useSelector((state) => state.cart);
+  console.log(cart);
   const user = useSelector((state) => state.user);
-  // console.log(cart);
+  console.log(cart);
   console.log(user.currentUser);
   const amount = cart.total;
   const username = user.currentUser?.username;
   console.log(username);
   const email = user.currentUser?.email;
-  const tx_ref = `${username}-tx-13122023`;
+  const tx_ref = `${username}-tx-13122623`;
   const public_key = "CHAPUBK_TEST-QWrLBBQxr4sTSewtSnaf5XNNzP23Ya61";
   const dispatch = useDispatch();
 
-  const handleQuantity = (productId, quantity) => {
-    dispatch(addProductQuantity({ productId, quantity }));
+  const handleQuantity = (index, quantity) => {
+    dispatch(addProductQuantity({ index, quantity }));
   };
 
   return (
@@ -190,7 +192,7 @@ function Cart() {
         <ProductAdd>
           <ProductItems>
             {cart.products &&
-              cart.products.map((item) => (
+              cart.products.map((item, index) => (
                 <ProductdDesc key={item._id}>
                   <ImageCOntainer>
                     <Image src={item.img} />
@@ -211,12 +213,12 @@ function Cart() {
                     <PriceDesc>
                       <Add
                         style={{ cursor: "pointer" }}
-                        onClick={() => handleQuantity(item._id, 1)}
+                        onClick={() => handleQuantity(index, 1)}
                       />
                       <AmountNumber>{item.quantity}</AmountNumber>
                       <Remove
                         style={{ cursor: "pointer" }}
-                        onClick={() => handleQuantity(item._id, -1)}
+                        onClick={() => handleQuantity(index, -1)}
                       />
                     </PriceDesc>
                     <PriceValue>$ {item.price * item.quantity}</PriceValue>

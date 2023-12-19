@@ -2,10 +2,12 @@ import { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { mobile } from "../responsive";
+import { Link } from "react-router-dom";
 const Container = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: linear-gradient(
@@ -28,6 +30,7 @@ const FormContainer = styled.form`
 const Title = styled.h3``;
 const InputContainer = styled.div`
   margin-left: 40px;
+  margin-top: -50px;
 `;
 const Input = styled.input`
   padding: 5px;
@@ -37,20 +40,26 @@ const Input = styled.input`
 const Rules = styled.span`
   margin: 20px;
   font-size: 13px;
+  margin-top: -40px;
 `;
 const Button = styled.button`
   font-size: 15px;
   font-weight: 500;
   color: #000;
   background-color: teal;
-  padding: 15px;
-
+  padding: 10px;
+  margin-top: -50px;
   &:hover {
     background-color: black;
     color: white;
   }
 `;
-
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 400;
+  color: #5cad4c;
+`;
 function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -104,12 +113,11 @@ function Register() {
             value={password}
           />
         </InputContainer>
-        <Rules>
-          By creating an acount, I consent to the proccess of my personal data
-          in accordance with the PRIVACY POLICY
-        </Rules>
         <Button type="submit">CREATE</Button>
       </FormContainer>
+      <Rules>
+        Have an account<StyledLink to="/Sign-in">Sign in </StyledLink>
+      </Rules>
     </Container>
   );
 }

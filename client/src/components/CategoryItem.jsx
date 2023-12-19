@@ -35,9 +35,9 @@ const Title = styled.h2`
   font-weight: 800;
   letter-spacing: 4px;
   margin-top: 30px;
-  margin-left: 136px;
+  margin-left: 200px;
   margin-bottom: 20px;
-  color: white;
+  color: red;
   width: 100%;
   ${mobile({ marginLeft: "170px", width: "100%" })}
 `;
@@ -45,7 +45,7 @@ const Button = styled.button`
   padding: 10px;
   font-size: 15px;
   font-weight: 400;
-  margin-left: 120px;
+  margin-left: 100px;
   ${mobile({ marginLeft: "0px" })}
 `;
 

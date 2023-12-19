@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../reducer/apiCall";
 import { mobile } from "../responsive";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   height: 100vh;
@@ -70,6 +71,13 @@ const Button = styled.button`
     color: white;
   }
 `;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 400;
+  color: #5cad4c;
+`;
 const Error = styled.span`
   color: red;
   margin-left: 40px;
@@ -107,8 +115,11 @@ function Login() {
             LOGIN
           </Button>
         </From>
+
         {isError && <Error>Something Went Wrong</Error>}
-        <Rules>DO YOU NOT REMEBER THE PASSWORD ? CREAYE NEW ACCOUNT</Rules>
+        <Rules>
+          Dont have an account? <StyledLink to="/sign-up">Sign Up</StyledLink>
+        </Rules>
       </FormContainer>
     </Container>
   );
