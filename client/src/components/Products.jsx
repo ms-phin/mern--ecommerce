@@ -13,7 +13,7 @@ const Container = styled.div`
   background-color: white;
   height: 110vh;
   width: 100%;
-  ${mobile({ height: "387vh" })}
+  ${mobile({ height: "438vh" })}
 `;
 
 function Products({ cat, filters, sort }) {

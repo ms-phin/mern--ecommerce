@@ -45,6 +45,9 @@ const MiddleDesc = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  ${mobile({
+    display: "none",
+  })}
 `;
 const Shopping = styled.span`
   margin: 10px;
@@ -110,9 +113,7 @@ const ColorProduct = styled.div`
   /* ${(props) => props.color} */
   margin: 8px;
 `;
-const SizeProduct = styled.span`
-  margin: 10px;
-`;
+
 const PriceContaer = styled.div`
   flex: 1;
   display: flex;
@@ -136,8 +137,16 @@ const PriceValue = styled.span`
 `;
 const IdProduct = styled.span`
   margin: 10px;
+  ${mobile({
+    display: "none",
+  })}
 `;
-
+const SizeProduct = styled.span`
+  margin: 10px;
+  ${mobile({
+    marginTop: "-20px",
+  })}
+`;
 const OrderTitle = styled.span`
   font-size: 35px;
   font-weight: 300;

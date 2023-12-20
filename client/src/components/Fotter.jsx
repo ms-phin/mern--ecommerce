@@ -50,7 +50,7 @@ const Center = styled.div`
   margin-bottom: 10px;
   ${mobile({
     height: "33vh",
-    marginTop: "-260px",
+    marginTop: "-170px",
     marginLeft: "12px",
   })}
 `;
@@ -73,7 +73,7 @@ const Right = styled.div`
   flex: 1;
   ${mobile({
     height: "33vh",
-    marginTop: "-200px",
+    marginTop: "-130px",
     marginLeft: "12px",
     marginBottom: "10px",
   })}

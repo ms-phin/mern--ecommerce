@@ -40,7 +40,7 @@ const SearchContainer = styled.div`
   justify-content: center;
   border: #837575 1px solid;
   border-radius: 5px;
-  ${mobile({ marginLeft: "-12px" })}
+  ${mobile({ display: "none" })}
 `;
 const Input = styled.input`
   border: none;
@@ -50,6 +50,7 @@ const Input = styled.input`
 
 const Center = styled.div`
   flex: 1;
+  ${mobile({ marginLeft: "-150px" })}
 `;
 const Header = styled.h1`
   display: flex;

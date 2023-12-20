@@ -14,11 +14,11 @@ import { mobile } from "../responsive";
 // import { useHistory } from "react-router-dom";
 
 const Container = styled.div`
-  height: 128vh;
+  height: 110vh;
   width: 100vw;
   overflow: hidden;
   /* display: flex; */
-  ${mobile({ height: "120vh" })}
+  ${mobile({ height: "160vh" })}
 `;
 const Wrapper = styled.div`
   height: 60%;
@@ -26,7 +26,13 @@ const Wrapper = styled.div`
   display: flex;
   margin-top: 30px;
   margin-left: 40px;
-  ${mobile({ display: "flex", flexDirection: "column" })}
+  ${mobile({
+    display: "flex",
+    height: "46%",
+    width: "100%",
+    marginLeft: "-20px",
+    flexDirection: "column",
+  })}
 `;
 const ImageContainer = styled.div`
   flex: 1;
@@ -43,10 +49,21 @@ const InfoContainer = styled.div`
   flex: 1;
   ${mobile({ height: "50%", marginLeft: "30px" })}
 `;
+// const Image = styled.img`
+//   width: "80%";
+//   height: "80%";
+//   ${mobile({ height: "100%", objectFit: "contain" })}
+// `;
+
 const Image = styled.img`
-  width: "80%";
-  height: "80%";
-  ${mobile({ height: "100%", objectFit: "contain" })}
+  width: 80%;
+  height: 80%;
+
+  ${mobile({
+    height: "200px",
+    objectFit: "contain",
+    width: "300%", // Adjusted to use the full width on mobile
+  })}
 `;
 const Title = styled.h2`
   /* margin-left: 20px; */
@@ -68,7 +85,7 @@ const FliterConatiner = styled.div`
   width: 50%;
   ${mobile({
     ":nth-child(2)": {
-      marginLeft: "20px",
+      marginLeft: "-11px",
     },
   })}
 `;
@@ -100,7 +117,6 @@ const FliterSize = styled.select`
 const Option = styled.option``;
 const CartConatier = styled.div`
   margin-top: 30px;
-
   display: flex;
   align-items: center;
 `;
@@ -123,7 +139,11 @@ const Button = styled.button`
   font-size: 15px;
   cursor: pointer;
   transition: all 0.5s ease;
-
+  ${mobile({
+    width: "120px",
+    padding: "8px",
+    marginLeft: "50px",
+  })}
   &:hover {
     background-color: black;
     color: white;
@@ -181,10 +201,7 @@ function product() {
       <Wrapper>
         <ImageContainer>
           {/* <Image src={product.img} /> */}
-          <Image
-            src={product.img}
-            style={{ height: "400px", width: "500px", objectFit: "contain" }}
-          />
+          <Image src={product.img} />
         </ImageContainer>
         <InfoContainer>
           <Title>{product.title}</Title>
